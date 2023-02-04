@@ -95,6 +95,15 @@ public:
 
   // Sigma point spreading parameter
   double lambda_;
+
+  // expressed in a variable improve performance
+  int n_sig_;
+
+  ///* Radar measurement noise covariance matrix
+  Eigen::MatrixXd R_radar_;
+
+  ///* Lidar measurement noise covariance matrix
+  Eigen::MatrixXd R_lidar_;
 };
 
 #endif // UKF_H
