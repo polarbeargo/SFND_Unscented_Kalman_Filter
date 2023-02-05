@@ -98,6 +98,54 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package)
    * TODO: Complete this function! Make sure you switch between lidar and radar
    * measurements.
    */
+  if (!is_initialized_)
+  {
+    time_us_ = meas_package.timestamp_;
+    if (meas_package.sensor_type_ == MeasurementPackage::RADAR)
+    {
+
+      /**
+      Convert radar from polar to cartesian coordinates
+      */
+
+      float rho = meas_package.raw_measurements_(0);
+      float phi = meas_package.raw_measurements_(1);
+      float rho_dot = meas_package.raw_measurements_(2);
+
+      float px = rho * cos(phi);
+      float py = rho * sin(phi);
+
+      x_ << px, py, 0, 0, 0;
+    }
+    else
+    {
+      float px = meas_package.raw_measurements_[0];
+      float py = meas_package.raw_measurements_[1];
+
+      x_ << px, py, 0, 0, 0;
+    }
+
+    // Saving First timestamp
+    time_us_ = meas_package.timestamp_;
+    is_initialized_ = true;
+    return;
+  }
+
+  // Prediction
+  double delta_t = (meas_package.timestamp_ - time_us_) / 1000000.0;
+  time_us_ = meas_package.timestamp_;
+
+  Prediction(delta_t);
+
+  // switch between lidar and radar measurements
+  if (meas_package.sensor_type_ == MeasurementPackage::RADAR)
+  {
+    UpdateRadar(meas_package);
+  }
+  else if (meas_package.sensor_type_ == MeasurementPackage::LASER)
+  {
+    UpdateLidar(meas_package);
+  }
 }
 
 void UKF::Prediction(double delta_t)
