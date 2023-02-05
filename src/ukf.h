@@ -6,6 +6,12 @@
 
 class UKF
 {
+private:
+  /**
+   *   normalize angles between [-M_PI, M_PI] interval.
+   */
+  void NormalizeAngle(VectorXd vector, int index);
+
 public:
   /**
    * Constructor
