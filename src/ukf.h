@@ -10,7 +10,7 @@ private:
   /**
    *   normalize angles between [-M_PI, M_PI] interval.
    */
-  void NormalizeAngle(VectorXd vector, int index);
+  void NormalizeAngle(Eigen::VectorXd &vector, int index);
 
 public:
   /**
@@ -104,12 +104,6 @@ public:
 
   // expressed in a variable improve performance
   int n_sig_;
-
-  ///* Radar measurement noise covariance matrix
-  Eigen::MatrixXd R_radar_;
-
-  ///* Lidar measurement noise covariance matrix
-  Eigen::MatrixXd R_lidar_;
 };
 
 #endif // UKF_H
