@@ -77,4 +77,4 @@ for instructions and the project rubric.
 
 ## Result  
 
-<img src="media/result.gif" width="700" height="400" />
+<img src="media/result.gif" width="700" height="400" />  
